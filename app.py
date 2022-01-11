@@ -23,7 +23,9 @@ def scrape():
            flipkart_page = bs(flipkart_page, 'html.parser')
            # print('flipkart_page------------', flipkart_page)
            boxes = flipkart_page.findAll('div', {'class':'_1AtVbE col-12-12'})
-           prodlink = flipkart_url+boxes[2].div.div.div.a['href']
+           del boxes[0:2]
+
+           prodlink = 'https://www.flipkart.com'+boxes[0].div.div.div.a['href']
            # prodlink.encoding('utf-8')
            prodres = requests.get(prodlink)
            # print(prodres)
@@ -67,6 +69,6 @@ def scrape():
         except Exception as e:
             print(str(e))
             return "Something is wrong"
-        return render_template('results.html', reviews  = reviews[0:len(reviews)-1])
+        return render_template('results.html', reviews= reviews[0:len(reviews)-1])
 if __name__=='__main__':
-    app.run()
+    app.run(debug=True)
